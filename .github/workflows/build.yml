@@ -17,22 +17,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'          # 启用缓存
+          cache: 'npm'
 
-      - name: 安装依赖并生成 lock 文件
-        run: |
-          npm install
-          # 如果没有 lock 文件，npm install 会自动生成
+      - name: 安装依赖
+        run: npm install --no-package-lock   # 关键：不生成也不要求 lock 文件
 
-      - name: 打包 Linux x64
+      - name: 打包 Linux x64（主流服务器）
         run: npx pkg . --targets node20-linux-x64 --output release/vless-proxy-linux-x64
 
-      - name: 打包 Linux arm64
+      - name: 打包 Linux arm64（适用于 Arm 服务器）
         run: npx pkg . --targets node20-linux-arm64 --output release/vless-proxy-linux-arm64
 
       - name: 上传构建产物
         uses: actions/upload-artifact@v4
         with:
           name: vless-proxy-binaries
-          path: release/*
+          path: release/
           retention-days: 30
+
+      - name: 显示构建结果
+        run: ls -lh release/
