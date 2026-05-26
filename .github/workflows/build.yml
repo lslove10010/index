@@ -10,29 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 设置 Node.js
+      - name: 设置 Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: 安装依赖
-        run: npm install --no-package-lock
+        run: npm install
+
+      - name: 安装 pkg
+        run: npm install -g pkg
 
       - name: 创建输出目录
         run: mkdir -p release
 
       - name: 打包 Linux x64
-        run: npx pkg . --targets node20-linux-x64 --output release/vless-proxy-linux-x64
+        run: pkg . --targets node20-linux-x64 --output release/vless-proxy-linux-x64
 
       - name: 打包 Linux arm64
-        run: npx pkg . --targets node20-linux-arm64 --output release/vless-proxy-linux-arm64
+        run: pkg . --targets node20-linux-arm64 --output release/vless-proxy-linux-arm64
 
-      - name: 上传构建产物
+      - name: 上传二进制文件
         uses: actions/upload-artifact@v4
         with:
           name: vless-proxy-binaries
           path: release/
-          retention-days: 30
