@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 设置 Node.js 20
+      - name: 设置 Node.js 18
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18  # 关键：必须用 18
 
       - name: 安装依赖
         run: npm install
@@ -27,12 +27,12 @@ jobs:
         run: mkdir -p release
 
       - name: 打包 Linux x64
-        run: pkg . --targets node20-linux-x64 --output release/vless-proxy-linux-x64
+        run: pkg . --targets node18-linux-x64 --output release/vless-proxy-linux-x64
 
       - name: 打包 Linux arm64
-        run: pkg . --targets node20-linux-arm64 --output release/vless-proxy-linux-arm64
+        run: pkg . --targets node18-linux-arm64 --output release/vless-proxy-linux-arm64
 
-      - name: 上传二进制文件
+      - name: 上传产物
         uses: actions/upload-artifact@v4
         with:
           name: vless-proxy-binaries
