@@ -1,16 +1,13 @@
 {
-  "name": "blog",
+  "name": "vless-ws",
   "version": "1.0.0",
-  "description": "服务管理器 (Node.js wrapper + dotenv)",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js"
-  },
+  "bin": "./index.js",
   "dependencies": {
-    "ws": "^8.14.2"
+    "ws": "^8.18.0"
   },
-  "engines": {
-    "node": ">=18"
+  "pkg": {
+    "scripts": ["index.js"],
+    "targets": ["node20-linux-x64", "node20-linux-arm64"]
   }
 }
