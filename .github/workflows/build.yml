@@ -17,10 +17,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: 'npm'          # 启用缓存
 
-      - name: 安装依赖
-        run: npm install
+      - name: 安装依赖并生成 lock 文件
+        run: |
+          npm install
+          # 如果没有 lock 文件，npm install 会自动生成
 
       - name: 打包 Linux x64
         run: npx pkg . --targets node20-linux-x64 --output release/vless-proxy-linux-x64
